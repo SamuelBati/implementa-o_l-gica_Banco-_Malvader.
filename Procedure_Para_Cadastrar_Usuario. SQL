@@ -1,0 +1,22 @@
+delimiter// create procedure cadastrar_usuario (
+  in id_usuario INT,
+  in nome VARCHAR(100),
+  in cpf VARCHAR(11),
+  in data_nascimento DATE,
+  in telefone VARCHAR(50),
+  in tipo_usuario('Funcionario', 'Cliente'),
+  in senha VARCHAR(50)
+)
+  begin
+    
+    if exists (select 1 from usuario WHERE cpf= p_cpf) then signal SQLSTATE '45000'
+    set message text= 'cpf ja cadastrado';
+    
+    else
+      insert into usuario (nome, cpf, data_nascimento, telefone, tipo_usuario, senha)
+      values (p_nome, p_cpf, p_data_nascimento, p_telefone, p_tipo_usuario, p_senha);
+
+  end if;
+  end //
+delimiter;
+      
